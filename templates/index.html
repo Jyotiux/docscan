@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Document Scanner</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #222;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 480px;
+            background-color: #fff;
+            padding: 32px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-bottom: 24px;
+            font-weight: 600;
+            font-size: 1.75rem;
+            color: #333;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 8px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: inline-block;
+            color: #555;
+        }
+        input[type="file"],
+        select,
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        input[type="file"]:focus,
+        select:focus,
+        input[type="number"]:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+        input[type="submit"] {
+            background-color: #4a90e2;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.25s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #357abd;
+        }
+        .result-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .result-section img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .download-btn {
+            margin-top: 20px;
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            transition: background-color 0.25s ease;
+        }
+        .download-btn:hover {
+            background-color: #357abd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload Document</h2>
+        <form action="/scan/" method="post" enctype="multipart/form-data" novalidate>
+            <label for="file">Select File</label>
+            <input type="file" id="file" name="file" required />
+
+            <label for="effect">Select Effect</label>
+            <select id="effect" name="effect" required>
+                <option value="grayscale">Grayscale</option>
+                <option value="sepia">Sepia</option>
+                <option value="invert">Invert</option>
+                <option value="sketch">Sketch</option>
+                <option value="threshold">Binarize</option>
+            </select>
+
+            <label for="contrast">Contrast (0.1 - 3.0)</label>
+            <input type="number" id="contrast" name="contrast" step="0.1" value="1.0" min="0.1" max="3.0" required />
+
+            <label for="brightness">Brightness (-100 to 100)</label>
+            <input type="number" id="brightness" name="brightness" step="1" value="0" min="-100" max="100" required />
+
+            <input type="submit" value="Process Document" />
+        </form>
+
+        {% if processed_image %}
+        <div class="result-section">
+            <h2>Processed Result</h2>
+            <img src="{{ processed_image }}" alt="Processed Document" />
+            <br />
+            <a href="{{ processed_image }}" download="processed_document.jpg" class="download-btn">
+                Download Processed Document
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
