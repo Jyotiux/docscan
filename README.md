@@ -30,7 +30,7 @@ docscanner/
 ├─ requirements.txt        # Python dependencies
 │
 ├─ scanner/                # Image processing module
-│   ├─ **init**.py
+│   ├─ __init__.py
 │   └─ preprocess.py       # Effects and customization logic
 │
 ├─ static/                 # Static files
